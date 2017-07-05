@@ -1,60 +1,100 @@
 package kdata.manager;
 
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class StudentManagerTest {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		// 1. 학생 정보 추가
-		// 2. 학생 리스트 이름으로 오름차순 정렬 후 출력
-		// 학생 정보를 원래 만들었던 것처럼 똑같이 만듬
+		
+		//1. 학생 정보추가(한명꺼만 저장하는 클래스 만들기(번호랑 이름))
+		//toString, hashCode를 자율
+		//2. 학생리스트(여러명 저장하는 클래스, 학생관리 클래스(StudentManager), 리스트는 하나만 만들어지게(new student, new manager 등 여러번해도 한번 -> static(클래스당 하나))
+		//학생정보추가 메소드 add()
+		//학생정보 출력 print()(iterator 또는 for문이용)
+		//3. main managerTest
+		
+		//1번클릭하면 add()
+		//2번클릭하면 print() 학생리스트 이름으로 오름차순 정렬후 출력
+		//3번클릭하면 종료
 
-		// 1번 누르면 add 메세지 출력
-		// 2번 누르면 한명 리스트 나오게
-		// 3번 검색
-		// 4번 삭제
-		// 5번 전체 총점
-		// 6번 최고 점수
-		// 7번 최저  점수
-		// 8번 종료
-		int num;
-		String name = null;
-		StudentManager s = new StudentManager();
 		Scanner sc = new Scanner(System.in);
-		while (true) {
-			System.out.println("1. add 2.list 3.search 4.remove 5.total 6.exit : ");
-
-			int select = sc.nextInt();// 1, \r, \n
-
-			switch (select) {
-			case 1:
-				s.add();
-				break;
-			case 2:
-				//String printName = sc.next();
-				s.print(name);
-				break;
-			case 3:
-				System.out.println("출력할 이름을 입력하세요: ");
-				String searchName = sc.next();
-				s.search(searchName);
-				break;
-			case 4:
-				System.out.println("삭제할 이름을 입력하세요: ");
-				String removeName = sc.next();
-				s.remove(removeName);
-				break;
-			case 5:
-				System.out.print("전체 총합은: ");
-				s.total();
-				break;
-			case 6:
-				s.exit();
-				break;
+		
+		int num = 0;
+		String name = null;
+		String tel = null;
+		String email = null;
+		int input = 0;
+		
+		StudentManager sm = new StudentManager();
+		
+		while(input != 8){	
+			System.out.println("> 1.add 2.print 3.search(학번) 4.search(이릅) 5.remove(학번) 6.remove(이름) 7.exit");
+			input = sc.nextInt();
+			
+			if(input == 1){
+				System.out.println("> 학번을 입력하세요: ");
+				num = sc.nextInt();
+				sc.nextLine();
+				System.out.println("> 이름을 입력하세요: ");
+				name = sc.nextLine();
+				System.out.println("> 전화번호을 입력하세요: ");
+				tel = sc.nextLine();
+				System.out.println("> 이메일을 입력하세요: ");
+				email = sc.nextLine();
+				
+				Student student = new Student(num, name, tel, email);
+				sm.add(student);
+				System.out.println("학생정보가 삽입되었습니다.");
+			} 
+			else if(input == 2){
+				sm.print();
 			}
+			else if(input == 3){
+				System.out.println("> 검색할 학번을 입력하세요: ");
+				num = sc.nextInt();
+				if(sm.seach(num) != null){
+					System.out.println(sm.seach(num));
+				}
+				else
+					System.out.println(num + "번 학생이 없습니다.");
+			}
+			else if(input == 4){
+				System.out.println("> 검색할 이름을 입력하세요: ");
+				sc.nextLine();
+				name = sc.nextLine();
+				if(sm.seach(name) != null){
+					System.out.println(sm.seach(name));
+				}
+				else
+					System.out.println(name + " 학생이 없습니다.");
+			}
+			else if(input == 5){
+				System.out.println("> 삭제할 학번을 입력하세요: ");
+				num = sc.nextInt();
+				if(sm.remove(num) != false){
+					System.out.println(num + "번 학생정보를 삭제하였습니다.");
+				}
+				else
+					System.out.println(num + "번 학생이 없습니다.");
+			}
+			else if(input == 6){
+				System.out.println("> 삭제할 이름을 입력하세요: ");
+				sc.nextLine();
+				name = sc.nextLine();
+				if(sm.remove(name) != false){
+					System.out.println(name + " 학생 정보를 삭제하였습니다.");
+				}
+				else
+					System.out.println(name + " 학생이 없습니다.");
+				System.out.println(sm.remove(name));
+			}
+			
 		}
+		System.out.println("> 종료되었습니다.");
+		System.exit(input);
 	}
+	
+	//-> 클래스 로드(내가 지금 사용하고자 하는 클래스를 전부불러오는 곳) -> main메소드 찾아닥ㅁ
+
 }
