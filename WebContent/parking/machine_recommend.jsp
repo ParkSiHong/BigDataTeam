@@ -1,0 +1,66 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@page import="bigdata.project.dto.ParkingLot"%>
+<%@page import="java.util.List"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>Insert title here</title>
+<%@ include file="../common/header.jsp" %>
+</head>
+<style>
+@import
+url("./css/table.css")
+</style>
+<body>
+<!-- Services Section -->
+   <section id="services">
+   <div id="demo">
+      <%
+         List<ParkingLot> list = (List<ParkingLot>) request.getAttribute("list");
+      %>
+      <form action="./bookmarkenroll.project">
+         <table id="table">
+            <thead>
+               <tr>
+                  <th>주차장번호</th>
+                  <th>주차장이름</th>
+                  <th>주차장유형</th>
+                  <th>기본요금</th>
+               </tr>
+            </thead>
+            <tbody>
+               <%
+                  for (int i = 0; i < list.size(); i++) {
+               %><!-- for(User user:list) -->
+               <tr>
+                  <td><a
+                     href="parkingdetail.project?parkingSearch=<%=list.get(i).getPrimaryNum()%>" style = "font-weight : 400">
+                        <%=list.get(i).getPrimaryNum()%>
+                  </a></td>
+                  <td><%=list.get(i).getParkingName()%></td>
+                  <td><%=list.get(i).getParkingType()%></td>
+                  <td><%=list.get(i).getParkingBasicFee()%></td>
+                  <td><input type="checkbox" name="check" id="check"
+                     value="<%=list.get(i).getPrimaryNum()%>"></td>
+               </tr>
+               <%
+                  }
+               %>
+            </tbody>
+         </table>
+         <input type="submit" id="search" value="즐겨찾기 추가">
+      </form>
+   </div>
+   </section>
+
+
+<%@ include file="../common/footer.jsp" %>
+</body>
+</html>
